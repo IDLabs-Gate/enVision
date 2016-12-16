@@ -1,0 +1,491 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9AA463AE1E0206C8006F5336 /* libprotobuf-lite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA463AB1E0206C8006F5336 /* libprotobuf-lite.a */; };
+		9AA463AF1E0206C8006F5336 /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA463AC1E0206C8006F5336 /* libprotobuf.a */; };
+		9AA463B01E0206C8006F5336 /* libtensorflow-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA463AD1E0206C8006F5336 /* libtensorflow-core.a */; };
+		9AA463B31E0206EC006F5336 /* Imagenet-labels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463B11E0206EC006F5336 /* Imagenet-labels.txt */; };
+		9AA463B41E0206EC006F5336 /* InceptionV3-opt.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463B21E0206EC006F5336 /* InceptionV3-opt.pb */; };
+		9AA463BE1E0206F6006F5336 /* coco-labels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463B51E0206F6006F5336 /* coco-labels.txt */; };
+		9AA463BF1E0206F6006F5336 /* tiny-coco-map.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463B61E0206F6006F5336 /* tiny-coco-map.pb */; };
+		9AA463C21E0206F6006F5336 /* voc-labels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463B91E0206F6006F5336 /* voc-labels.txt */; };
+		9AA463C31E0206F6006F5336 /* yolo-map.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463BA1E0206F6006F5336 /* yolo-map.pb */; };
+		9AA463C41E0206F6006F5336 /* yolo-small-opt.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463BB1E0206F6006F5336 /* yolo-small-opt.pb */; };
+		9AA463C51E0206F6006F5336 /* yolo-tiny-opt.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463BC1E0206F6006F5336 /* yolo-tiny-opt.pb */; };
+		9AC021651DE6290C00C29FF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0215F1DE6290C00C29FF4 /* AppDelegate.swift */; };
+		9AC021661DE6290C00C29FF4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC021601DE6290C00C29FF4 /* ViewController.swift */; };
+		9AC021671DE6290C00C29FF4 /* FaceNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC021611DE6290C00C29FF4 /* FaceNet.swift */; };
+		9AC021681DE6290C00C29FF4 /* YOLO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC021621DE6290C00C29FF4 /* YOLO.swift */; };
+		9AC021691DE6290C00C29FF4 /* Inception.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC021631DE6290C00C29FF4 /* Inception.swift */; };
+		9AC0216A1DE6290C00C29FF4 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC021641DE6290C00C29FF4 /* Camera.swift */; };
+		9AC0216F1DE6291C00C29FF4 /* tfWrap.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0216C1DE6291C00C29FF4 /* tfWrap.mm */; };
+		9AC021701DE6291C00C29FF4 /* tensorflow_utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0216E1DE6291C00C29FF4 /* tensorflow_utils.mm */; };
+		9AC021781DE6292400C29FF4 /* svm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC021711DE6292400C29FF4 /* svm.cpp */; };
+		9AC021791DE6292400C29FF4 /* SVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC021731DE6292400C29FF4 /* SVM.swift */; };
+		9AC0217A1DE6292400C29FF4 /* svmutils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC021741DE6292400C29FF4 /* svmutils.cpp */; };
+		9AC0217B1DE6292400C29FF4 /* svmWrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AC021761DE6292400C29FF4 /* svmWrap.cpp */; };
+		9AC0218F1DE6293900C29FF4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AC021881DE6293900C29FF4 /* LaunchScreen.storyboard */; };
+		9AC021901DE6293900C29FF4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AC021891DE6293900C29FF4 /* Main.storyboard */; };
+		9AC021911DE6293900C29FF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AC0218A1DE6293900C29FF4 /* Assets.xcassets */; };
+		9AC021931DE6293900C29FF4 /* TypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0218C1DE6293900C29FF4 /* TypeExtensions.swift */; };
+		9AC021A41DE62AD600C29FF4 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AC021A31DE62AD600C29FF4 /* Accelerate.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9AA463AB1E0206C8006F5336 /* libprotobuf-lite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libprotobuf-lite.a"; path = "../../tf/tflib/libprotobuf-lite.a"; sourceTree = "<group>"; };
+		9AA463AC1E0206C8006F5336 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotobuf.a; path = ../../tf/tflib/libprotobuf.a; sourceTree = "<group>"; };
+		9AA463AD1E0206C8006F5336 /* libtensorflow-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libtensorflow-core.a"; path = "../../tf/tflib/libtensorflow-core.a"; sourceTree = "<group>"; };
+		9AA463B11E0206EC006F5336 /* Imagenet-labels.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Imagenet-labels.txt"; path = "../../tf/tfmodels/Imagenet-labels.txt"; sourceTree = "<group>"; };
+		9AA463B21E0206EC006F5336 /* InceptionV3-opt.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "InceptionV3-opt.pb"; path = "../../tf/tfmodels/InceptionV3-opt.pb"; sourceTree = "<group>"; };
+		9AA463B51E0206F6006F5336 /* coco-labels.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "coco-labels.txt"; path = "../../tf/tfmodels/coco-labels.txt"; sourceTree = "<group>"; };
+		9AA463B61E0206F6006F5336 /* tiny-coco-map.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "tiny-coco-map.pb"; path = "../../tf/tfmodels/tiny-coco-map.pb"; sourceTree = "<group>"; };
+		9AA463B91E0206F6006F5336 /* voc-labels.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "voc-labels.txt"; path = "../../tf/tfmodels/voc-labels.txt"; sourceTree = "<group>"; };
+		9AA463BA1E0206F6006F5336 /* yolo-map.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "yolo-map.pb"; path = "../../tf/tfmodels/yolo-map.pb"; sourceTree = "<group>"; };
+		9AA463BB1E0206F6006F5336 /* yolo-small-opt.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "yolo-small-opt.pb"; path = "../../tf/tfmodels/yolo-small-opt.pb"; sourceTree = "<group>"; };
+		9AA463BC1E0206F6006F5336 /* yolo-tiny-opt.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "yolo-tiny-opt.pb"; path = "../../tf/tfmodels/yolo-tiny-opt.pb"; sourceTree = "<group>"; };
+		9AC0214A1DE628EC00C29FF4 /* enVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = enVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AC0215F1DE6290C00C29FF4 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9AC021601DE6290C00C29FF4 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9AC021611DE6290C00C29FF4 /* FaceNet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceNet.swift; sourceTree = "<group>"; };
+		9AC021621DE6290C00C29FF4 /* YOLO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YOLO.swift; sourceTree = "<group>"; };
+		9AC021631DE6290C00C29FF4 /* Inception.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inception.swift; sourceTree = "<group>"; };
+		9AC021641DE6290C00C29FF4 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		9AC0216B1DE6291C00C29FF4 /* tfWrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tfWrap.h; sourceTree = "<group>"; };
+		9AC0216C1DE6291C00C29FF4 /* tfWrap.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tfWrap.mm; sourceTree = "<group>"; };
+		9AC0216D1DE6291C00C29FF4 /* tensorflow_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tensorflow_utils.h; sourceTree = "<group>"; };
+		9AC0216E1DE6291C00C29FF4 /* tensorflow_utils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tensorflow_utils.mm; sourceTree = "<group>"; };
+		9AC021711DE6292400C29FF4 /* svm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svm.cpp; sourceTree = "<group>"; };
+		9AC021721DE6292400C29FF4 /* svm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svm.h; sourceTree = "<group>"; };
+		9AC021731DE6292400C29FF4 /* SVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVM.swift; sourceTree = "<group>"; };
+		9AC021741DE6292400C29FF4 /* svmutils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svmutils.cpp; sourceTree = "<group>"; };
+		9AC021751DE6292400C29FF4 /* svmutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svmutils.h; sourceTree = "<group>"; };
+		9AC021761DE6292400C29FF4 /* svmWrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svmWrap.cpp; sourceTree = "<group>"; };
+		9AC021771DE6292400C29FF4 /* svmWrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svmWrap.h; sourceTree = "<group>"; };
+		9AC021881DE6293900C29FF4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9AC021891DE6293900C29FF4 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		9AC0218A1DE6293900C29FF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9AC0218B1DE6293900C29FF4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9AC0218C1DE6293900C29FF4 /* TypeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeExtensions.swift; sourceTree = "<group>"; };
+		9AC0218D1DE6293900C29FF4 /* enVision-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "enVision-Bridging-Header.h"; sourceTree = "<group>"; };
+		9AC021A31DE62AD600C29FF4 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9AC021471DE628EC00C29FF4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9AA463AE1E0206C8006F5336 /* libprotobuf-lite.a in Frameworks */,
+				9AA463AF1E0206C8006F5336 /* libprotobuf.a in Frameworks */,
+				9AC021A41DE62AD600C29FF4 /* Accelerate.framework in Frameworks */,
+				9AA463B01E0206C8006F5336 /* libtensorflow-core.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9A5D54B11DEED0F10089918F /* TensorFlow */ = {
+			isa = PBXGroup;
+			children = (
+				9A5D54B21DEED1080089918F /* Library */,
+				9AC0216B1DE6291C00C29FF4 /* tfWrap.h */,
+				9AC0216C1DE6291C00C29FF4 /* tfWrap.mm */,
+				9AC0216D1DE6291C00C29FF4 /* tensorflow_utils.h */,
+				9AC0216E1DE6291C00C29FF4 /* tensorflow_utils.mm */,
+			);
+			name = TensorFlow;
+			sourceTree = "<group>";
+		};
+		9A5D54B21DEED1080089918F /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				9AA463AB1E0206C8006F5336 /* libprotobuf-lite.a */,
+				9AA463AC1E0206C8006F5336 /* libprotobuf.a */,
+				9AA463AD1E0206C8006F5336 /* libtensorflow-core.a */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
+		9A5D54B41DEED1260089918F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9AB437431E0192F600CCDF28 /* Inception */,
+				9AB437421E0192EF00CCDF28 /* YOLO */,
+				9AB437441E0192FC00CCDF28 /* FaceNet */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		9A5D54B51DEED1350089918F /* SVM */ = {
+			isa = PBXGroup;
+			children = (
+				9AC021731DE6292400C29FF4 /* SVM.swift */,
+				9AC021761DE6292400C29FF4 /* svmWrap.cpp */,
+				9AC021771DE6292400C29FF4 /* svmWrap.h */,
+				9AC021711DE6292400C29FF4 /* svm.cpp */,
+				9AC021721DE6292400C29FF4 /* svm.h */,
+				9AC021741DE6292400C29FF4 /* svmutils.cpp */,
+				9AC021751DE6292400C29FF4 /* svmutils.h */,
+			);
+			name = SVM;
+			sourceTree = "<group>";
+		};
+		9AB437421E0192EF00CCDF28 /* YOLO */ = {
+			isa = PBXGroup;
+			children = (
+				9AA463B51E0206F6006F5336 /* coco-labels.txt */,
+				9AA463B61E0206F6006F5336 /* tiny-coco-map.pb */,
+				9AA463B91E0206F6006F5336 /* voc-labels.txt */,
+				9AA463BA1E0206F6006F5336 /* yolo-map.pb */,
+				9AA463BB1E0206F6006F5336 /* yolo-small-opt.pb */,
+				9AA463BC1E0206F6006F5336 /* yolo-tiny-opt.pb */,
+			);
+			name = YOLO;
+			sourceTree = "<group>";
+		};
+		9AB437431E0192F600CCDF28 /* Inception */ = {
+			isa = PBXGroup;
+			children = (
+				9AA463B11E0206EC006F5336 /* Imagenet-labels.txt */,
+				9AA463B21E0206EC006F5336 /* InceptionV3-opt.pb */,
+			);
+			name = Inception;
+			sourceTree = "<group>";
+		};
+		9AB437441E0192FC00CCDF28 /* FaceNet */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = FaceNet;
+			sourceTree = "<group>";
+		};
+		9AC021411DE628EC00C29FF4 = {
+			isa = PBXGroup;
+			children = (
+				9AC0214C1DE628EC00C29FF4 /* enVision */,
+				9AC0214B1DE628EC00C29FF4 /* Products */,
+				9AC021A21DE62AD500C29FF4 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		9AC0214B1DE628EC00C29FF4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9AC0214A1DE628EC00C29FF4 /* enVision.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9AC0214C1DE628EC00C29FF4 /* enVision */ = {
+			isa = PBXGroup;
+			children = (
+				9AC0215F1DE6290C00C29FF4 /* AppDelegate.swift */,
+				9AC021601DE6290C00C29FF4 /* ViewController.swift */,
+				9AC021631DE6290C00C29FF4 /* Inception.swift */,
+				9AC021621DE6290C00C29FF4 /* YOLO.swift */,
+				9AC021611DE6290C00C29FF4 /* FaceNet.swift */,
+				9AC021641DE6290C00C29FF4 /* Camera.swift */,
+				9A5D54B11DEED0F10089918F /* TensorFlow */,
+				9A5D54B41DEED1260089918F /* Models */,
+				9A5D54B51DEED1350089918F /* SVM */,
+				9AC021881DE6293900C29FF4 /* LaunchScreen.storyboard */,
+				9AC021891DE6293900C29FF4 /* Main.storyboard */,
+				9AC0218A1DE6293900C29FF4 /* Assets.xcassets */,
+				9AC0218B1DE6293900C29FF4 /* Info.plist */,
+				9AC0218C1DE6293900C29FF4 /* TypeExtensions.swift */,
+				9AC0218D1DE6293900C29FF4 /* enVision-Bridging-Header.h */,
+			);
+			path = enVision;
+			sourceTree = "<group>";
+		};
+		9AC021A21DE62AD500C29FF4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9AC021A31DE62AD600C29FF4 /* Accelerate.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9AC021491DE628EC00C29FF4 /* enVision */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9AC0215C1DE628EC00C29FF4 /* Build configuration list for PBXNativeTarget "enVision" */;
+			buildPhases = (
+				9AC021461DE628EC00C29FF4 /* Sources */,
+				9AC021471DE628EC00C29FF4 /* Frameworks */,
+				9AC021481DE628EC00C29FF4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = enVision;
+			productName = enVision;
+			productReference = 9AC0214A1DE628EC00C29FF4 /* enVision.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9AC021421DE628EC00C29FF4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0810;
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = "ID Labs";
+				TargetAttributes = {
+					9AC021491DE628EC00C29FF4 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 423D7XJN2V;
+						LastSwiftMigration = 0810;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 9AC021451DE628EC00C29FF4 /* Build configuration list for PBXProject "enVision" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9AC021411DE628EC00C29FF4;
+			productRefGroup = 9AC0214B1DE628EC00C29FF4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9AC021491DE628EC00C29FF4 /* enVision */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9AC021481DE628EC00C29FF4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9AA463C21E0206F6006F5336 /* voc-labels.txt in Resources */,
+				9AA463C31E0206F6006F5336 /* yolo-map.pb in Resources */,
+				9AC021901DE6293900C29FF4 /* Main.storyboard in Resources */,
+				9AA463BF1E0206F6006F5336 /* tiny-coco-map.pb in Resources */,
+				9AA463BE1E0206F6006F5336 /* coco-labels.txt in Resources */,
+				9AC0218F1DE6293900C29FF4 /* LaunchScreen.storyboard in Resources */,
+				9AA463B31E0206EC006F5336 /* Imagenet-labels.txt in Resources */,
+				9AA463B41E0206EC006F5336 /* InceptionV3-opt.pb in Resources */,
+				9AC021911DE6293900C29FF4 /* Assets.xcassets in Resources */,
+				9AA463C41E0206F6006F5336 /* yolo-small-opt.pb in Resources */,
+				9AA463C51E0206F6006F5336 /* yolo-tiny-opt.pb in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9AC021461DE628EC00C29FF4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9AC021781DE6292400C29FF4 /* svm.cpp in Sources */,
+				9AC021681DE6290C00C29FF4 /* YOLO.swift in Sources */,
+				9AC021661DE6290C00C29FF4 /* ViewController.swift in Sources */,
+				9AC0216A1DE6290C00C29FF4 /* Camera.swift in Sources */,
+				9AC0216F1DE6291C00C29FF4 /* tfWrap.mm in Sources */,
+				9AC021691DE6290C00C29FF4 /* Inception.swift in Sources */,
+				9AC021931DE6293900C29FF4 /* TypeExtensions.swift in Sources */,
+				9AC021791DE6292400C29FF4 /* SVM.swift in Sources */,
+				9AC021671DE6290C00C29FF4 /* FaceNet.swift in Sources */,
+				9AC0217B1DE6292400C29FF4 /* svmWrap.cpp in Sources */,
+				9AC021701DE6291C00C29FF4 /* tensorflow_utils.mm in Sources */,
+				9AC021651DE6290C00C29FF4 /* AppDelegate.swift in Sources */,
+				9AC0217A1DE6292400C29FF4 /* svmutils.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9AC0215A1DE628EC00C29FF4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9AC0215B1DE628EC00C29FF4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9AC0215D1DE628EC00C29FF4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 423D7XJN2V;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/enVision",
+				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../tf";
+				INFOPLIST_FILE = enVision/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../tf/tflib";
+				OTHER_LDFLAGS = (
+					"-force_load",
+					"$(PROJECT_DIR)/../tf/tflib/libtensorflow-core.a",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.idlabs.enVision.enVision;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "enVision/enVision-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		9AC0215E1DE628EC00C29FF4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = arm64;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 423D7XJN2V;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/enVision",
+				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../tf";
+				INFOPLIST_FILE = enVision/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../tf/tflib";
+				OTHER_LDFLAGS = (
+					"-force_load",
+					"$(PROJECT_DIR)/../tf/tflib/libtensorflow-core.a",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.idlabs.enVision.enVision;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "enVision/enVision-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9AC021451DE628EC00C29FF4 /* Build configuration list for PBXProject "enVision" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9AC0215A1DE628EC00C29FF4 /* Debug */,
+				9AC0215B1DE628EC00C29FF4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9AC0215C1DE628EC00C29FF4 /* Build configuration list for PBXNativeTarget "enVision" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9AC0215D1DE628EC00C29FF4 /* Debug */,
+				9AC0215E1DE628EC00C29FF4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9AC021421DE628EC00C29FF4 /* Project object */;
+}
