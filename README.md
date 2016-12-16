@@ -1,6 +1,8 @@
 # enVision
 Deep Learning Models for Vision Tasks on iOS
 
+![sample] (https://github.com/IDLabs-Gate/enVision/blob/master/sample.jpg)
+
 ## Usage
 Download [Dependencies]
 
@@ -19,7 +21,7 @@ https://arxiv.org/abs/1512.00567
 
 Inception v3 (ImageNet)
 
-Can run retrained models 
+Can run retrained models too
 
 #### YOLO:
 https://arxiv.org/abs/1506.02640
@@ -33,10 +35,14 @@ YOLO 1.1 tiny (COCO): Fast on extended classes
 YOLO 2 (COCO): Best accuracy on extended classes
 
 .
+
 .
+
 #### FaceNet (soon)
 https://arxiv.org/abs/1503.03832
+
 .
+
 .
 
 ## License
