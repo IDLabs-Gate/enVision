@@ -23,6 +23,8 @@ Inception v3 (ImageNet)
 
 Can run retrained models too
 
+.
+
 #### YOLO:
 https://arxiv.org/abs/1506.02640
 
@@ -36,12 +38,8 @@ YOLO 2 (COCO): Best accuracy on extended classes
 
 .
 
-.
-
-#### FaceNet (soon)
+#### FaceNet (soon):
 https://arxiv.org/abs/1503.03832
-
-.
 
 .
 
