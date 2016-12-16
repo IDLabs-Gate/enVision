@@ -4,8 +4,8 @@ Deep Learning Models for Vision Tasks on iOS
 ![sample] (https://github.com/IDLabs-Gate/enVision/blob/master/sample.jpg)
 
 ## Usage
-Download [Dependencies]
-
+Download [dependencies] folder tf
+[dependencies]:https://drive.google.com/open?id=0B7JMhWoJ8WpUNW9wYS1tRVI0dlk
 Extract all archives in tf/tfmodels and tf/tflib
 
 Put tf folder in same directory level as enVision project folder
@@ -52,4 +52,4 @@ Owner: ID Labs L.L.C.
 
 Original Contributor: Muhammad Hilal
 
-[Dependencies]:https://drive.google.com/open?id=0B7JMhWoJ8WpUNW9wYS1tRVI0dlk
+
