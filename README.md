@@ -47,6 +47,7 @@ https://arxiv.org/abs/1503.03832
 Inception-Resnet-v1 (FaceScrub and CASIA-Webface)
 
 Native iOS face detector + FaceNet feature extractor from snaps + kNN classifier with Euclidean distance
+
 .
 
 #### Inception: 
