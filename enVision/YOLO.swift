@@ -24,114 +24,93 @@
 
 import UIKit
 
-let tfYolo = tfWrap()
-typealias YoloBox = (c: Double, x: CGFloat, y: CGFloat, w: CGFloat, h: CGFloat,probs: [Double])
+typealias YoloOutput = [(label: String, prob: Double, box: CGRect, object: CIImage)]
 
-private var coco = false
-private var v2 = false
-private var threshold = 0.25
-
-private let anchors_voc = [1.08, 1.19, 3.42, 4.41, 6.63, 11.38, 9.42, 5.11, 16.62, 10.52]
-private let anchors_coco = [0.738768, 0.874946, 2.42204, 2.65704, 4.30971, 7.04493, 10.246, 4.59428, 12.6868, 11.8741]
-
-private var newLabels : [String] = []
-private var labels : [String] = []
-
-extension ViewController {
+class YOLO {
     
-    func loadYoloModel(tiny: Bool = false, coco c: Bool = false, v2 v: Bool = false) {
+    var threshold = 0.25
+    private var tfYolo : tfWrap?
+    private var coco = false
+    private var v2 = false
+
+    private let anchors_voc = [1.08, 1.19, 3.42, 4.41, 6.63, 11.38, 9.42, 5.11, 16.62, 10.52]
+    private let anchors_coco = [0.738768, 0.874946, 2.42204, 2.65704, 4.30971, 7.04493, 10.246, 4.59428, 12.6868, 11.8741]
+
+    typealias YoloBox = (c: Double, x: CGFloat, y: CGFloat, w: CGFloat, h: CGFloat,probs: [Double])
+    
+    func load(_ model: Int=0){
         
-        if c {//coco
-            if v {//v2
-                tfYolo.loadModel("yolo-map.pb", labels: "coco-labels.txt", memMapped: true, optEnv: true)
-                threshold = 0.25
-            } else {//v1.1
-                tfYolo.loadModel("tiny-coco-map.pb" , labels: "coco-labels.txt", memMapped: true)
-                threshold = 0.15
-            }
-        } else {//voc
-            //v1
-            tfYolo.loadModel(tiny ? "yolo-tiny-opt.pb" : "yolo-small-opt.pb", labels: "voc-labels.txt", memMapped: true)
-            threshold = 0.2
+        clean()
+        tfYolo = tfWrap()
+        
+        switch model {
+            //1: YOLO 1 tiny
+            //2: YOLO 1 small
+            //3: YOLO 1.1 tiny
+            //0,4: YOLO 2
+        case 1:
+            tfYolo?.loadModel("yolo-tiny-opt.pb", labels: "voc-labels.txt", memMapped: true, optEnv: true)
+            coco = false; v2 = false
+
+        case 2:
+            tfYolo?.loadModel("yolo-small-opt.pb", labels: "voc-labels.txt", memMapped: true, optEnv: true)
+            coco = false; v2 = false
+            
+        case 3:
+            tfYolo?.loadModel("tiny-coco-map.pb" , labels: "coco-labels.txt", memMapped: true, optEnv: true)
+            coco = true; v2 = false
+            
+        default:
+            tfYolo?.loadModel("yolo-map.pb", labels: "coco-labels.txt", memMapped: true, optEnv: true)
+            coco = true; v2 = true
+            
         }
         
-        tfYolo.setInputLayer("input", outputLayer: "output")
+        tfYolo?.setInputLayer("input", outputLayer: "output")
         
-        coco = c
-        v2 = v
-        
-        lastModel = tfYolo
-        newLabels = tfYolo.getLabels().flatMap{ $0 as? String }
-        
-        if labels.count == 0 {//first time
-            labels = newLabels
-        }
     }
     
-    func detectYoloObjects(frameImage:CIImage){
+    func run(image: CIImage)-> YoloOutput {
+        
+        if tfYolo == nil { load() }
+        guard let tfYolo = tfYolo else { return [] }
         
         //pre-processing
         let inputEdge = v2 ? 416 : 448
-        let input = CIImage(cgImage: resizeImage(frameImage, newWidth: CGFloat(inputEdge), newHeight: CGFloat(inputEdge)).cgImage!)
+        let input = CIImage(cgImage: resizeImage(image, newWidth: CGFloat(inputEdge), newHeight: CGFloat(inputEdge)).cgImage!)
         
         var buffer : CVPixelBuffer?
         CVPixelBufferCreate(kCFAllocatorDefault, inputEdge, inputEdge, kCVPixelFormatType_32BGRA, [String(kCVPixelBufferIOSurfacePropertiesKey) : [:]] as CFDictionary, &buffer)
         
         if let buffer = buffer {
             CIContext().render(input, to: buffer)
-            
-            //let prev = CIImage(cvPixelBuffer: buffer)
-            //showPreview(UIImage(ciImage:prev), edge: CGFloat(inputEdge))
         }
         
-        let now = Date(timeIntervalSinceNow: 0)
         //neural network forward run
-        guard let network_output = tfYolo.run(onFrame: buffer) else { return }
-        let runTime = Date().timeIntervalSince(now)
-        setTimeLabel(time: runTime)
+        guard let network_output = tfYolo.run(onFrame: buffer) else { return [] }
         
         let output = network_output.flatMap{ ($0 as? NSNumber)?.doubleValue }
         
         //post-processing
         var boxes = postProcessYolo(output: output)
         
-        //non max suppress boxes
+        //suppress redundant boxes
         boxes = suppressOverlappingYoloBoxes(boxes, classes: coco ? 80 : 20)
         
-        //get probabilities per class
-        var predictions = [String : Double]()
-        var chosenBoxes = [CGRect]()
+        let labels = tfYolo.getLabels().flatMap{ $0 as? String }
         
-        let currentLabels = labels
-        for b in boxes {
-            guard let max_prob = b.probs.max() else { continue }
-            guard let max_index = b.probs.index(of: max_prob) else { continue }
-            guard max_index<currentLabels.count else { break }
+        return boxes.flatMap { b -> (label: String, prob: Double, box: CGRect, object: CIImage)? in
+            //get probabilities per class
+            guard let max_prob = b.probs.max() else { return nil }
+            guard max_prob>0 else { return nil }
+            guard let max_index = b.probs.index(of: max_prob) else { return nil }
+            guard max_index<labels.count else { return nil }
             
-            let label = currentLabels[max_index]
+            let label = labels[max_index]
             
-            if max_prob > threshold {
-                //show box
-                chosenBoxes.append(CGRect(x: b.x, y: b.y, width: b.w, height: b.h))
-                
-                //take the max prob for each category
-                if let oldValue = predictions[label] {
-                    if oldValue<max_prob {
-                        predictions[label] = max_prob
-                    }
-                } else {
-                    predictions[label] = max_prob
-                }
-                
-            }
-            
-        }
-        
-        //convert Yolo boxes to screen
-        chosenBoxes = chosenBoxes.map { rect in
-            
-            let frameWidth = frameImage.extent.width
-            let frameHeight = frameImage.extent.height
+            //convert Yolo boxes to screen
+            let frameWidth = image.extent.width
+            let frameHeight = image.extent.height
             let screenWidth = UIScreen.main.bounds.width
             let screenHeight = UIScreen.main.bounds.height
             
@@ -143,28 +122,24 @@ extension ViewController {
             let biasX = horizontal ? 0 : (screenWidth-seenWidth)/2
             let biasY = horizontal ? (screenHeight-seenHeight)/2 : 0
             
-            let x = (rect.origin.x-rect.width/2)*seenWidth + biasX
-            let y = (rect.origin.y-rect.height/2)*seenHeight + biasY
-            let w = rect.width*seenWidth
-            let h = rect.height*seenHeight
+            let x = (b.x-b.w/2)*seenWidth + biasX
+            let y = (b.y-b.h/2)*seenHeight + biasY
+            let w = b.w*seenWidth
+            let h = b.h*seenHeight
+            let screenRect = CGRect(x: x, y: y, width: w, height: h)
             
-            return CGRect(x: x, y: y, width: w, height: h)
+            //extract Yolo objects from image
+            let xx = (b.x-b.w/2)*frameWidth
+            let yy = (b.y-b.h/2)*frameHeight
+            let ww = b.w*frameWidth
+            let hh = b.h*frameHeight
             
+            let rect = CGRect(x: xx, y: yy, width: ww, height: hh)
+            
+            let object = cropImage(image, to: rect, margin: 0.2*(rect.width<rect.height ? rect.width : rect.height))
+            
+            return (label, max_prob, screenRect, object)
         }
-        
-        drawBoxes(chosenBoxes)
-        
-        print("Chosen Boxes", chosenBoxes.count)
-        print("Predictions", predictions.count)
-        
-        
-        async_main {
-            self.setPredictionValues(predictions)
-        }
-        
-        labels = newLabels //change labels here to avoid mid-processing change
-        
-        halt(0.5*runTime<0.3 ? 0.5*runTime : 0.3)
     }
     
     func postProcessYolo(output:[Double])-> [YoloBox] {
@@ -238,12 +213,13 @@ extension ViewController {
                 let w = CGFloat(pow(cords[grid][b][2],2))
                 let h = CGFloat(pow(cords[grid][b][3],2))
                 
-                boxes.append((c, x, y, w, h, Array(0..<C).map { i in c * probs[grid][i] }))
+                let probs = Array(0..<C).map { i in c * probs[grid][i]>self.threshold ? c * probs[grid][i] : 0 }//apply threshold
                 
+                if probs.contains(where: {$0>0}) {
+                    boxes.append((c, x, y, w, h, probs ))
+                }
             }
         }
-        
-        print("Boxes", boxes.count)
         
         return boxes
         
@@ -256,7 +232,7 @@ extension ViewController {
         let H = 13
         
         let R = output.count/(W*H*B)
-    
+        
         var values = Tensor([H,W,B,R]) as! [[[[Double]]]]
         
         var i = 0
@@ -271,12 +247,12 @@ extension ViewController {
             }
         }
         
-        print("Shape", values.count, values[0].count, values[0][0].count, values[0][0][0].count)
+        //print("Shape", values.count, values[0].count, values[0][0].count, values[0][0][0].count)
         
         //evaluate boxes
         var boxes = [YoloBox]()
         let anchors = coco ? anchors_coco : anchors_voc
-        
+
         for row in 0..<H {
             for col in 0..<W {
                 for b in 0..<B {
@@ -288,24 +264,69 @@ extension ViewController {
                     var c = values[row][col][b][4]
                     
                     c = expit(c)
-                    x = (Double(col)+expit(x))/Double(W)
-                    y = (Double(row)+expit(y))/Double(H)
-                    w = pow(M_E, w)*anchors[2*b+0]/Double(W)
-                    h = pow(M_E, h)*anchors[2*b+1]/Double(H)
+                    x = (Double(col)+expit(x))/13
+                    y = (Double(row)+expit(y))/13
+                    w = pow(M_E, w)*anchors[2*b+0]/13
+                    h = pow(M_E, h)*anchors[2*b+1]/13
                     
                     let classes = Array(values[row][col][b][5..<R])
-                    let probs = softmax(classes).map { $0*c>threshold ? $0*c : 0 }
                     
-                    boxes.append((c,CGFloat(x),CGFloat(y),CGFloat(w),CGFloat(h),probs))
+                    let probs = softmax(classes).map { $0*c>self.threshold ? $0*c : 0 }//apply threshold
+                    
+                    if probs.contains(where: {$0>0}) {
+                        boxes.append((c,CGFloat(x),CGFloat(y),CGFloat(w),CGFloat(h),probs))
+                    }
                     
                 }
             }
         }
-        
-        print("Boxes", boxes.count)
-        
         return boxes
         
+    }
+    
+    func suppressOverlappingYoloBoxes(_ boxes:[YoloBox], classes: Int)-> [YoloBox] {
+        
+        var boxes = boxes
+        
+        for c in 0..<classes { //for each class
+        
+            boxes.sort{ a, b -> Bool in a.probs[c] < b.probs[c] }
+            
+            for i in 0..<boxes.count {
+                
+                let b = boxes[i]
+                if b.probs[c] == 0 { continue }
+                
+                for j in i+1..<boxes.count {
+                    
+                    let b2 = boxes[j]
+                    let rect1 = CGRect(x: b.x, y: b.y, width: b.w, height: b.h)
+                    let rect2 = CGRect(x: b2.x, y: b2.y, width: b2.w, height: b2.h)
+                    let intersection = boxIntersection(a: rect1, b: rect2)
+                
+                    let area2 = b2.w*b2.h
+                    
+                    let apart = intersection/area2
+                    
+                    if apart >= 0.5 {//suppress with over %50 overlap
+                        if b.probs[c] > b2.probs[c] {
+                            
+                            var jprobs = b2.probs
+                            jprobs[c] = 0
+                            boxes[j] = (b2.c, b2.x, b2.y, b2.w, b2.h, jprobs)
+                            
+                        } else {
+                            var iprobs = b.probs
+                            iprobs[c] = 0
+                            boxes[i] = (b.c, b.x, b.y, b.w, b.h, iprobs)
+                        }
+                    }
+                }
+            }
+            
+        }
+        
+        return boxes
     }
     
     func Tensor(_ dim: [Int]) -> [Any] {
@@ -337,62 +358,23 @@ extension ViewController {
             
             return right - left
         }
-        
+       
         let w = overlap(x1: a.origin.x, w1: a.width, x2: b.origin.x, w2: b.width)
         let h = overlap(x1: a.origin.y, w1: a.height, x2: b.origin.y, w2: b.height)
         
         if w<0 || h<0 { return 0 }
         
-        return w*h
+        let result = w*h
+        
+        
+        return result
     }
-
-    func suppressOverlappingYoloBoxes(_ boxes:[YoloBox], classes: Int)-> [YoloBox] {
-        
-        var boxes = boxes
-        
-        for c in 0..<classes { //for each class
-            
-            boxes.sort{ a, b -> Bool in a.probs[c] < b.probs[c] }
-            
-            for i in 0..<boxes.count {
-                let b = boxes[i]
-                if b.probs[c] == 0 { continue }
-                
-                for j in i+1..<boxes.count {
-                    let b2 = boxes[j]
-                    let rect1 = CGRect(x: b.x, y: b.y, width: b.w, height: b.h)
-                    let rect2 = CGRect(x: b2.x, y: b2.y, width: b2.w, height: b2.h)
-                    let intersection = boxIntersection(a: rect1, b: rect2)
-                    
-                    let area2 = b2.w*b2.h
-                    
-                    let apart = intersection/area2
-                    
-                    if apart >= 0.5 {//suppress with over %50 overlap
-                        if b.probs[c] > b2.probs[c] {
-                            
-                            var jprobs = b2.probs
-                            jprobs[c] = 0
-                            boxes[j] = (b2.c, b2.x, b2.y, b2.w, b2.h, jprobs)
-                            
-                        } else {
-                            var iprobs = b.probs
-                            iprobs[c] = 0
-                            boxes[i] = (b.c, b.x, b.y, b.w, b.h, iprobs)
-                        }
-                    }
-                    
-                }
-            }
-            
-        }
-        
-        return boxes
-    }
-    
     
     func expit(_ x: Double)-> Double {
-        return Double(1)/Double(1+pow(M_E, -x))
+        
+        let result = Double(1)/Double(1+pow(M_E, -x))
+        
+        return result
         
     }
     
@@ -400,12 +382,18 @@ extension ViewController {
         
         guard let max = X.max() else { return [] }
         
-        let result = X.map { x in pow(M_E, x-max) }
+        var result = X.map { x in pow(M_E, x-max) }
         
         let sum = result.reduce(0, +)
         
-        return result.map { $0/sum }
+        result = result.map { $0/sum }
+
+        return result
         
+    }
+    
+    func clean() {
+        tfYolo?.clean()
     }
     
 }

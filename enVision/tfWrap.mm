@@ -26,19 +26,21 @@
 #import "tensorflow_utils.h"
 #import <CoreImage/CoreImage.h>
 
-dispatch_queue_t tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIAL);
+
 
 @interface tfWrap()
 {
     std::string input_layer_name;
     std::string output_layer_name;
-
+    
     float input_mean;
     float input_std;
 
     std::unique_ptr<tensorflow::Session> tf_session;
     std::unique_ptr<tensorflow::MemmappedEnv> tf_memmapped_env;
     std::vector<std::string> labels;
+    
+    dispatch_queue_t tfQueue;
 
 }
 @end
@@ -46,6 +48,8 @@ dispatch_queue_t tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIA
 @implementation tfWrap
 
 - (void) loadModel:(NSString*)graphFileName labels:(NSString*)labelsFileName memMapped:(bool)map optEnv:(bool)opt {
+    
+    if (tfQueue==nil) { tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIAL);}
     
     dispatch_sync(tfQueue,^{
         NSString* model_file_name;
@@ -115,6 +119,8 @@ dispatch_queue_t tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIA
 }
 
 -(void) clean {
+    if (tfQueue==nil) { tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIAL);}
+    
     dispatch_sync(tfQueue, ^{
         CleanSession(&tf_session);
         labels.clear();
@@ -123,6 +129,8 @@ dispatch_queue_t tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIA
 
 -(void)setInputLayer:(NSString *)inLayer outputLayer:(NSString *)outLayer {
     
+    if (tfQueue==nil) { tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIAL);}
+    
     dispatch_sync(tfQueue, ^{
         input_layer_name = [inLayer UTF8String];
         output_layer_name = [outLayer UTF8String];
@@ -130,6 +138,9 @@ dispatch_queue_t tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIA
 }
 
 -(void)setInputMean:(float)mean std:(float)std {
+    
+    if (tfQueue==nil) { tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIAL);}
+    
     dispatch_sync(tfQueue, ^{
         input_mean = mean; input_std = std;
     });
@@ -137,11 +148,11 @@ dispatch_queue_t tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIA
 
 -(NSArray*) getLabels {
     
-    LOG(INFO) << "Labels count " << labels.size();
+    //LOG(INFO) << "Labels count " << labels.size();
     NSMutableArray* arr = [NSMutableArray array];
     for (int index = 0; index < labels.size(); index += 1) {
         std::string label = labels[index];
-        NSString *labelObject = [NSString stringWithCString:label.c_str()];
+        NSString *labelObject = [NSString stringWithUTF8String:label.c_str()];
         
         [arr addObject:labelObject];
     }
@@ -152,6 +163,8 @@ dispatch_queue_t tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIA
 - (NSArray*)runOnFrame:(CVPixelBufferRef)pixelBuffer {
     assert(pixelBuffer != NULL);
     
+    if (tfQueue==nil) { tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIAL);}
+    
     __block NSArray* output;
     
     dispatch_sync(tfQueue, ^{
@@ -159,7 +172,9 @@ dispatch_queue_t tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIA
         const int sourceRowBytes = (int)CVPixelBufferGetBytesPerRow(pixelBuffer);
         const int image_width = (int)CVPixelBufferGetWidth(pixelBuffer);
         const int fullHeight = (int)CVPixelBufferGetHeight(pixelBuffer);
+        
         CVPixelBufferLockBaseAddress(pixelBuffer, 0);
+        
         unsigned char *sourceBaseAddr =
         (unsigned char *)(CVPixelBufferGetBaseAddress(pixelBuffer));
         int image_height;
@@ -201,24 +216,22 @@ dispatch_queue_t tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIA
             }
         }
         
+        CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
+        
         if (tf_session.get()) {
-            NSDate* startTime = [NSDate date];
             
             std::vector<tensorflow::Tensor> outputs;
-            tensorflow::Status run_status = tf_session->Run(
-                                                            {{input_layer_name, image_tensor}}, {output_layer_name}, {}, &outputs);
+            tensorflow::Status run_status = tf_session->Run({{input_layer_name, image_tensor}}, {output_layer_name}, {}, &outputs);
             if (!run_status.ok()) {
                 LOG(ERROR) << "Running model failed:" << run_status;
             } else {
                 
-                LOG(INFO)<< "Run duration: "<< -[startTime timeIntervalSinceNow];
+                //LOG(INFO)<< "Run duration: "<< -[startTime timeIntervalSinceNow];
                 
                 tensorflow::Tensor *outputTensor = &outputs[0];
                 /*
                 LOG(INFO)<< "Tensor dim[0] " << outputTensor->shape().dim_size(0);
                 LOG(INFO)<< "Tensor dim[1] " << outputTensor->shape().dim_size(1);//1470 = 7x7x(2*5+20)
-                LOG(INFO)<< "Tensor dim[2] " << outputTensor->shape().dim_size(2);
-                LOG(INFO)<< "Tensor dim[3] " << outputTensor->shape().dim_size(3);
                 */
                 
                 auto values = outputTensor->flat<float>();

@@ -22,20 +22,41 @@
 //    SOFTWARE.
 //
 
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
+import Foundation
 
-void* SVM_create_trainer();
-void SVM_destroy_trainer(void* trainerHandle);
-void SVM_train(void* trainerHandle, float expectedLabel, float* predictions, int predictionsLength);
-void* SVM_create_predictor_from_trainer(void* trainerHandle);
-void SVM_destroy_predictor(void* predictorHandle);
-int SVM_save_predictor(const char* filename, void* predictorHandle);
-void* SVM_load_predictor(const char* filename);
-void SVM_print_predictor(void* predictorHandle);
-float SVM_predict(void* predictorHandle, float* predictions, int predictionsLength);
+class KNN {
 
-#ifdef __cplusplus
+    private let kNN = tfkNN()
+    private var loaded = false
+
+    func load(){
+        kNN.loadModel("kNN.pb")
+        loaded = true
+    }
+    
+    func run(x: [Double], samples: [[Double]], classes: [Int]) -> (Int, Double){
+        
+        guard classes.count>0 && samples.count==classes.count else { return (-1,0) }
+        
+        if !loaded { load() }
+        
+        //choosing k = n^(1/2), but not more than the min count/2 of samples in a class
+        let minCount = Set(classes).map { c in classes.filter { $0==c }.count }.min{ a,b in a<b }!
+        var k = Int(sqrt(Double(samples.count)))
+        if k>minCount/2 { k = minCount/2 }
+        if k<1 { k = 1 }
+        print ("K", k)
+        
+        let c = kNN.classify(x, samples: samples, classes: classes, k: Int32(k))
+        
+        guard let pred = c?.first?.key as? Int else { return (-1,0) }
+        guard let dist = c?.first?.value as? Double else { return (-1,0) }
+        
+        return (pred,dist)
+    }
+    
+    func clean(){
+        kNN.clean()
+        loaded = false;
+    }
 }
-#endif // __cplusplus

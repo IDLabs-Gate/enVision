@@ -22,91 +22,26 @@
 //    SOFTWARE.
 //
 
-
 import UIKit
 
-let tfFacenet = tfWrap()
-
-private let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [ CIDetectorAccuracy : CIDetectorAccuracyLow ])
-
-private var frameRects : [CGRect] = []
-private var frame : CIImage? = nil
-
-private var otherFaceFeatures : [[Double]] = []
-private var currentFaceFeatuers : [Double] = []
-
-extension ViewController {
+class FaceNet {
+    private var tfFacenet : tfWrap?
     
-    func loadFacenetModel(){
+    func load(){
         
-            tfFacenet.loadModel("facenet-inf-opt.pb", labels: nil, memMapped: true, optEnv: true)
-            tfFacenet.setInputLayer("input", outputLayer: "embeddings")
-            
-            lastModel = tfFacenet
-        
+        clean()
+        tfFacenet = tfWrap()
+        tfFacenet?.loadModel("facenet-inf-opt.pb", labels: nil, memMapped: true, optEnv: true)
+        tfFacenet?.setInputLayer("input", outputLayer: "embeddings")
     }
     
-    func selectFace(tap: CGPoint) {
-       
-        guard let frameImage = frame else { return }
+    func run(image: CIImage)-> [Double]{
         
-        var tapInside = false
-        
-        for rect in frameRects {
-            
-            if rect.applying(transformToScreen(frameImage.extent)).contains(tap){
-                tapInside = true
-                let cropped = frameImage.cropping(to: rect)
-                let face = cropped.applying(CGAffineTransform(translationX: -rect.origin.x, y: -rect.origin.y))
-                
-                finalTask = {
-                    currentFaceFeatuers = self.generateFaceFeatures(faceImage: face)
-                    self.showPreview(UIImage(ciImage:face), edge: 160)
-                }
-                
-                break
-            }
-        }
-        
-        if !tapInside {
-            finalTask = {
-                currentFaceFeatuers.removeAll()
-                self.hidePreview()
-            }
-        }
-    }
-    
-    func detectFaces(frameImage: CIImage){
-        
-        guard let features = faceDetector?.features(in: frameImage) as? [CIFaceFeature] else { return }
-        
-        frame = frameImage
-        frameRects = features.map { $0.bounds }
-        
-        var boxesToDraw : [CGRect] = []
-        
-        for rect in frameRects {
-            //let cropped = frameImage.cropping(to: rect)
-            //let face = cropped.applying(CGAffineTransform(translationX: -rect.origin.x, y: -rect.origin.y))
-            
-            //let features = self.generateFaceFeatures(faceImage: face)
-            
-            let dist = 0.0 // l2distance(features, currentFaceFeatuers)
-            //print("face l2 distance", dist)
-            
-            if dist<1.0 {
-                boxesToDraw.append(rect.applying(transformToScreen(frameImage.extent)))
-            }
-        }
-        
-        drawBoxes(boxesToDraw, color: true)
-        
-    }
-    
-    func generateFaceFeatures(faceImage: CIImage)->[Double]{
+        if tfFacenet == nil { load() }
+        guard let tfFacenet = tfFacenet else { return [] }
         
         let inputEdge = 160
-        let input = CIImage(cgImage: resizeImage(faceImage, newWidth: CGFloat(inputEdge), newHeight: CGFloat(inputEdge)).cgImage!)
+        let input = CIImage(cgImage: resizeImage(image, newWidth: CGFloat(inputEdge), newHeight: CGFloat(inputEdge)).cgImage!)
         
         var buffer : CVPixelBuffer?
         CVPixelBufferCreate(kCFAllocatorDefault, inputEdge, inputEdge, kCVPixelFormatType_32BGRA, [String(kCVPixelBufferIOSurfacePropertiesKey) : [:]] as CFDictionary, &buffer)
@@ -118,52 +53,41 @@ extension ViewController {
         
         let output = network_output.flatMap{ ($0 as? NSNumber)?.doubleValue }
         
-        print("embeddings", output.count)
+        //print("embeddings", output.count)
         
         return output
     }
     
-    func l2distance(_ feat1: [Double], _ feat2: [Double])-> Double{
+    static func l2distance(_ feat1: [Double], _ feat2: [Double])-> Double{
         
         //dist = np.sqrt(np.sum(np.square(np.subtract(emb[i,:], emb[j,:]))))
         return sqrt(zip(feat1,feat2).map { f1, f2 in pow(f2-f1,2) }.reduce(0, +))
-        
     }
     
-    
-    func testOtherFaces() {
-        
-        let f1 = identifyFace(uiImage: #imageLiteral(resourceName: "person1_1.jpg"))
-        let f2 = identifyFace(uiImage: #imageLiteral(resourceName: "person1_2.jpg"))
-        
-        let f3 = identifyFace(uiImage: #imageLiteral(resourceName: "person2_1.jpg"))
-        let f4 = identifyFace(uiImage: #imageLiteral(resourceName: "person2_2.jpg"))
-        
-        let dist1 = l2distance(f1, f2)
-        let dist2 = l2distance(f3, f4)
-        
-        let dist3 = l2distance(f1, f3)
-        let dist4 = l2distance(f2, f4)
-        
-        print("same image dist", dist1, dist2)
-        print("diff image dist", dist3, dist4)
-        
+    func clean(){
+        tfFacenet?.clean()
     }
     
-    func identifyFace(uiImage: UIImage)-> [Double]{
-        guard let cgImage = uiImage.cgImage else { return [] }
-        return identifyFace(ciImage: CIImage(cgImage: cgImage))
-        
-    }
+}
+
+typealias FaceOutput = [(face:CIImage, box: CGRect, smile: Bool)]
+
+class FaceDetector {
     
-    func identifyFace(ciImage: CIImage)-> [Double]{
+    private let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [ CIDetectorAccuracy : CIDetectorAccuracyLow ])
+
+    func extractFaces(frame: CIImage)-> FaceOutput {
         
-        guard let faceFeat = faceDetector?.features(in: ciImage).first as? CIFaceFeature else { return [] }
-        let rect = faceFeat.bounds
-        let cropped = ciImage.cropping(to: rect)
-        let face = cropped.applying(CGAffineTransform(translationX: -rect.origin.x, y: -rect.origin.y))
+        guard let features = faceDetector?.features(in: frame, options: [CIDetectorSmile : true]) as? [CIFaceFeature] else { return [] }
         
-        return self.generateFaceFeatures(faceImage: face)
+        return features.map { f -> (face: CIImage, box: CGRect, smile: Bool) in
+            
+            let rect = f.bounds
+            let cropped = frame.cropping(to: rect)
+            let face = cropped.applying(CGAffineTransform(translationX: -rect.origin.x, y: -rect.origin.y))
+            let box = rect.applying(transformToScreen(frame.extent))
+            return (face,box, f.hasSmile)
+        }
         
     }
     
@@ -190,7 +114,4 @@ extension ViewController {
         
         return transform
     }
-
-
-
 }

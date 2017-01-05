@@ -3,7 +3,7 @@
 //  jpcnn
 //
 //  Created by Peter Warden on 1/9/14.
-//  Copyright (c) 2014 Jetpac, Inc. All rights reserved.
+//  Copyright (c) 2014 Jetpac, Inc.
 //
 
 #ifndef INCLUDE_SVMUTILS_H

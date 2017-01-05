@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         //disable lock screen
-        UIApplication.shared.isIdleTimerDisabled = true
+        //UIApplication.shared.isIdleTimerDisabled = true
         
         return true
     }

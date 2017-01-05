@@ -22,20 +22,18 @@
 //    SOFTWARE.
 //
 
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
+#ifndef tfkNN_h
+#define tfkNN_h
 
-void* SVM_create_trainer();
-void SVM_destroy_trainer(void* trainerHandle);
-void SVM_train(void* trainerHandle, float expectedLabel, float* predictions, int predictionsLength);
-void* SVM_create_predictor_from_trainer(void* trainerHandle);
-void SVM_destroy_predictor(void* predictorHandle);
-int SVM_save_predictor(const char* filename, void* predictorHandle);
-void* SVM_load_predictor(const char* filename);
-void SVM_print_predictor(void* predictorHandle);
-float SVM_predict(void* predictorHandle, float* predictions, int predictionsLength);
 
-#ifdef __cplusplus
-}
-#endif // __cplusplus
+#endif /* tfkNN_h */
+
+#import <Foundation/Foundation.h>
+
+@interface tfkNN : NSObject
+
+-(void) loadModel:(NSString*)modelName;
+-(NSDictionary*) classify:(NSArray*)x samples:(NSArray*)samples classes:(NSArray*)classes k:(int)k;
+-(void) clean;
+
+@end

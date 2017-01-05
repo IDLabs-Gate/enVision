@@ -468,9 +468,6 @@ extension Array where Element : CenterType {
         
         return [first, second, third, fourth]
     }
-
-    
-        
 }
 
 var activityOverlay: UIView?
@@ -1136,7 +1133,7 @@ extension UIColor {
  return orientImageWithDevice(cropped)
  }*/
 
-func resizeImage(_ ciImage: CIImage, scale: CGFloat, orient: Bool) -> UIImage {
+func resizeImage(_ ciImage: CIImage, scale: CGFloat, orient: Bool=false) -> UIImage {
     
     let image = orient ? orientImageWithDevice(ciImage) : UIImage(ciImage: ciImage)
     
@@ -1165,6 +1162,15 @@ func resizeImage(_ image: UIImage, newWidth: CGFloat, newHeight: CGFloat)->UIIma
 func resizeImage(_ image: CIImage, newWidth: CGFloat, newHeight: CGFloat)->UIImage{
     
     return resizeImage(UIImage(ciImage: image), newWidth: newWidth, newHeight: newHeight)
+}
+
+func cropImage(_ image: CIImage, to rect: CGRect, margin: CGFloat=0)-> CIImage{
+    
+    var rect = rect.insetBy(dx: -margin, dy: -margin)//add margin
+    rect = rect.applying(CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -image.extent.height))//convert to CoreImage coordinates
+    
+    let cropped = image.cropping(to: rect)
+    return cropped.applying(CGAffineTransform(translationX: -rect.origin.x, y: -rect.origin.y))
 }
 
 func checkLandscape()->Bool {
@@ -1297,8 +1303,6 @@ extension UIViewController {
     
     
 }
-
-//MARK: - Dispatch
 
 func async(_ block: (()->())?){
 
@@ -1607,8 +1611,6 @@ func lock(_ duration:Double)->Bool{
     return proceed
 }
 
-//MARK: - File Manager
-
 func docFlagExists(_ name: String)-> Bool{
     
     let fileManager = FileManager.default
@@ -1741,8 +1743,6 @@ func deleteFile(_ path:String){
     }
     return
 }
-
-//MARK: - Animation
 
 func anim(_ duration: Double, actions: @escaping (Void)->Void, completion: ((Void)->Void)?){
     UIView .animate(withDuration: duration, animations: actions, completion: { _ in completion?()})

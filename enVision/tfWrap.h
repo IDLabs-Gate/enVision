@@ -39,6 +39,6 @@
 - (void) setInputMean:(float)mean std:(float)std;
 - (NSArray*)runOnFrame:(CVPixelBufferRef)pixelBuffer;
 - (NSArray*) getLabels;
--(void) clean;
+- (void) clean;
 @end
 

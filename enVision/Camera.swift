@@ -61,6 +61,9 @@ private var photoSingleton = singleton_handle()
 private var photoCaptureCompletion : ((Data)->Void)?
 private var end_singleton: ((Void)->Void)?
 
+private var worldView = WorldView()
+
+var frameProcessing: ((CIImage)->Void)?
 
 extension ViewController : AVCaptureVideoDataOutputSampleBufferDelegate, AVCapturePhotoCaptureDelegate {
 
@@ -68,6 +71,11 @@ extension ViewController : AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptu
         
         //Cam-related UI elements
         do {
+            worldView = WorldView(frame: view.bounds)
+            worldView.backgroundColor = UIColor.black
+            view.addSubview(worldView)
+            view.sendSubview(toBack: worldView)
+            
             resumeButton = UIButton(frame: CGRect(origin: worldView.center, size: CGSize(width: 150, height: 50)))
             resumeButton .setTitle("Resume", for: UIControlState())
             resumeButton .setTitleColor(UIColor.white, for: UIControlState())
@@ -154,7 +162,7 @@ extension ViewController : AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptu
                     initialVideoOrientation = AVCaptureVideoOrientation(rawValue: statusBarOrientation.rawValue)!
                 }
                 
-                let previewLayer = self.worldView.layer as! AVCaptureVideoPreviewLayer
+                let previewLayer = worldView.layer as! AVCaptureVideoPreviewLayer
                 previewLayer.connection.videoOrientation = initialVideoOrientation
                 previewLayer.videoGravity = AVLayerVideoGravityResizeAspect
                 
@@ -204,7 +212,16 @@ extension ViewController : AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptu
         }
         
     }
-
+    
+    func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
+        
+        guard let buffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        
+        let frameImage = CIImage(cvPixelBuffer: buffer)
+        
+        frameProcessing?(frameImage)
+        
+    }
     
     func checkCam() -> AVCamSetupResult {
         
@@ -247,7 +264,6 @@ extension ViewController : AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptu
         return setupResult
     }
     
-    
     func stopCam() {
 
         sessionQueue.async {
@@ -260,7 +276,6 @@ extension ViewController : AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptu
         
     }
 
-    
     func startCam() {
 
         sessionQueue.async {
@@ -282,16 +297,6 @@ extension ViewController : AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptu
         frontCam = !frontCam
         setupCam()
         resumeFrames()
-        
-    }
-    
-    func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
-        
-        guard let buffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
-        
-        let frameImage = CIImage(cvPixelBuffer: buffer)
-        
-        frameProcessing?(frameImage)
         
     }
     
@@ -324,7 +329,6 @@ extension ViewController : AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptu
 
     }
     
-    
     func stillImageCapture(completion: @escaping (Data)->Void) {
         
         async_singleton_wait(photoSingleton) { end in
@@ -332,7 +336,7 @@ extension ViewController : AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptu
             end_singleton = end
             
             let connection = stillImageOutput.connection(withMediaType: AVMediaTypeVideo)
-            let previewLayer = self.worldView.layer as! AVCaptureVideoPreviewLayer
+            let previewLayer = worldView.layer as! AVCaptureVideoPreviewLayer
             
             // Update the orientation on the still image output video connection before capturing.
             connection?.videoOrientation = previewLayer.connection.videoOrientation
@@ -430,7 +434,7 @@ extension ViewController : AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptu
     
     func subjectAreaDidChange(_ notification: Notification) {
         let devicePoint = CGPoint(x: 0.5, y: 0.5)
-        self.focusWithMode(AVCaptureFocusMode.continuousAutoFocus, exposeWithMode: AVCaptureExposureMode.continuousAutoExposure, atDevicePoint: devicePoint, monitorSubjectAreaChange: true)
+        self.focusWithMode(.autoFocus, exposeWithMode: .autoExpose, atDevicePoint: devicePoint, monitorSubjectAreaChange: true)
     }
     
     func sessionRuntimeError(_ notification: Notification) {
@@ -543,7 +547,7 @@ extension ViewController : AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptu
     
 
     @IBAction func focusAndExposeTap(_ gestureRecognizer: UIGestureRecognizer) {
-        let devicePoint = (self.worldView.layer as! AVCaptureVideoPreviewLayer).captureDevicePointOfInterest(for: gestureRecognizer.location(in: gestureRecognizer.view))
+        let devicePoint = (worldView.layer as! AVCaptureVideoPreviewLayer).captureDevicePointOfInterest(for: gestureRecognizer.location(in: gestureRecognizer.view))
         self.focusWithMode(AVCaptureFocusMode.autoFocus, exposeWithMode: AVCaptureExposureMode.autoExpose, atDevicePoint: devicePoint, monitorSubjectAreaChange: true)
 
     }
@@ -602,7 +606,25 @@ extension ViewController : AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptu
         
         return captureDevice
     }
-        
+    
+    
+    //MARK: - Orientation
+    override var shouldAutorotate : Bool {
+        return true
+    }
+    
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return .landscape
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        orientCam()
+    }
+    
+    override var prefersStatusBarHidden : Bool {
+        return true
+    }
+    
 }
 
 class WorldView: UIView {

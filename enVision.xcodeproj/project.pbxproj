@@ -7,17 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9AA463AE1E0206C8006F5336 /* libprotobuf-lite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA463AB1E0206C8006F5336 /* libprotobuf-lite.a */; };
-		9AA463AF1E0206C8006F5336 /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA463AC1E0206C8006F5336 /* libprotobuf.a */; };
-		9AA463B01E0206C8006F5336 /* libtensorflow-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA463AD1E0206C8006F5336 /* libtensorflow-core.a */; };
-		9AA463B31E0206EC006F5336 /* Imagenet-labels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463B11E0206EC006F5336 /* Imagenet-labels.txt */; };
-		9AA463B41E0206EC006F5336 /* InceptionV3-opt.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463B21E0206EC006F5336 /* InceptionV3-opt.pb */; };
-		9AA463BE1E0206F6006F5336 /* coco-labels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463B51E0206F6006F5336 /* coco-labels.txt */; };
-		9AA463BF1E0206F6006F5336 /* tiny-coco-map.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463B61E0206F6006F5336 /* tiny-coco-map.pb */; };
-		9AA463C21E0206F6006F5336 /* voc-labels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463B91E0206F6006F5336 /* voc-labels.txt */; };
-		9AA463C31E0206F6006F5336 /* yolo-map.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463BA1E0206F6006F5336 /* yolo-map.pb */; };
-		9AA463C41E0206F6006F5336 /* yolo-small-opt.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463BB1E0206F6006F5336 /* yolo-small-opt.pb */; };
-		9AA463C51E0206F6006F5336 /* yolo-tiny-opt.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AA463BC1E0206F6006F5336 /* yolo-tiny-opt.pb */; };
+		9A0529FA1E10722A00C69E6A /* tfkNN.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9A0529F91E10722A00C69E6A /* tfkNN.mm */; };
+		9A8B0BB31E1D4B1F00752AAE /* yolo-tiny-opt.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9A8B0BB21E1D4B1F00752AAE /* yolo-tiny-opt.pb */; };
 		9AC021651DE6290C00C29FF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0215F1DE6290C00C29FF4 /* AppDelegate.swift */; };
 		9AC021661DE6290C00C29FF4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC021601DE6290C00C29FF4 /* ViewController.swift */; };
 		9AC021671DE6290C00C29FF4 /* FaceNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC021611DE6290C00C29FF4 /* FaceNet.swift */; };
@@ -35,20 +26,29 @@
 		9AC021911DE6293900C29FF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AC0218A1DE6293900C29FF4 /* Assets.xcassets */; };
 		9AC021931DE6293900C29FF4 /* TypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0218C1DE6293900C29FF4 /* TypeExtensions.swift */; };
 		9AC021A41DE62AD600C29FF4 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AC021A31DE62AD600C29FF4 /* Accelerate.framework */; };
+		9AD668071E12CDF6002B4D62 /* kNN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD668061E12CDF6002B4D62 /* kNN.swift */; };
+		9AD9A9001E1D19490011F845 /* yolo-map.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AD9A8FF1E1D19490011F845 /* yolo-map.pb */; };
+		9AEF8E721E1879E400210D31 /* Transparency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF8E711E1879E400210D31 /* Transparency.swift */; };
+		9AEF8E761E187BCD00210D31 /* Imagenet-labels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9AEF8E751E187BCD00210D31 /* Imagenet-labels.txt */; };
+		9AEF9CF01E18165F00E9A360 /* libprotobuf-lite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEF9CED1E18165F00E9A360 /* libprotobuf-lite.a */; };
+		9AEF9CF11E18165F00E9A360 /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEF9CEE1E18165F00E9A360 /* libprotobuf.a */; };
+		9AEF9CF21E18165F00E9A360 /* libtensorflow-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEF9CEF1E18165F00E9A360 /* libtensorflow-core.a */; };
+		9AEF9CF41E18167400E9A360 /* DeepBelief.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEF9CF31E18167400E9A360 /* DeepBelief.framework */; };
+		9AEF9CF61E18169A00E9A360 /* jetpac.ntwk in Resources */ = {isa = PBXBuildFile; fileRef = 9AEF9CF51E18169A00E9A360 /* jetpac.ntwk */; };
+		9AEF9CFC1E1821AF00E9A360 /* kNN.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AEF9CFB1E1821AF00E9A360 /* kNN.pb */; };
+		9AEF9CFE1E1821C100E9A360 /* voc-labels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9AEF9CFD1E1821C100E9A360 /* voc-labels.txt */; };
+		9AEF9D001E1821C700E9A360 /* coco-labels.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9AEF9CFF1E1821C700E9A360 /* coco-labels.txt */; };
+		9AEF9D041E182CBC00E9A360 /* Jetpac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEF9D031E182CBC00E9A360 /* Jetpac.swift */; };
+		9AF0E06D1E1DB4D80029F13F /* yolo-small-opt.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AF0E06C1E1DB4D80029F13F /* yolo-small-opt.pb */; };
+		9AF0E06F1E1DB4E50029F13F /* tiny-coco-map.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AF0E06E1E1DB4E50029F13F /* tiny-coco-map.pb */; };
+		9AF0E0711E1DB4F60029F13F /* InceptionV3-opt.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AF0E0701E1DB4F60029F13F /* InceptionV3-opt.pb */; };
+		9AF0E0731E1DB4FC0029F13F /* facenet-inf-opt.pb in Resources */ = {isa = PBXBuildFile; fileRef = 9AF0E0721E1DB4FC0029F13F /* facenet-inf-opt.pb */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9AA463AB1E0206C8006F5336 /* libprotobuf-lite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libprotobuf-lite.a"; path = "../../tf/tflib/libprotobuf-lite.a"; sourceTree = "<group>"; };
-		9AA463AC1E0206C8006F5336 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotobuf.a; path = ../../tf/tflib/libprotobuf.a; sourceTree = "<group>"; };
-		9AA463AD1E0206C8006F5336 /* libtensorflow-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libtensorflow-core.a"; path = "../../tf/tflib/libtensorflow-core.a"; sourceTree = "<group>"; };
-		9AA463B11E0206EC006F5336 /* Imagenet-labels.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Imagenet-labels.txt"; path = "../../tf/tfmodels/Imagenet-labels.txt"; sourceTree = "<group>"; };
-		9AA463B21E0206EC006F5336 /* InceptionV3-opt.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "InceptionV3-opt.pb"; path = "../../tf/tfmodels/InceptionV3-opt.pb"; sourceTree = "<group>"; };
-		9AA463B51E0206F6006F5336 /* coco-labels.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "coco-labels.txt"; path = "../../tf/tfmodels/coco-labels.txt"; sourceTree = "<group>"; };
-		9AA463B61E0206F6006F5336 /* tiny-coco-map.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "tiny-coco-map.pb"; path = "../../tf/tfmodels/tiny-coco-map.pb"; sourceTree = "<group>"; };
-		9AA463B91E0206F6006F5336 /* voc-labels.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "voc-labels.txt"; path = "../../tf/tfmodels/voc-labels.txt"; sourceTree = "<group>"; };
-		9AA463BA1E0206F6006F5336 /* yolo-map.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "yolo-map.pb"; path = "../../tf/tfmodels/yolo-map.pb"; sourceTree = "<group>"; };
-		9AA463BB1E0206F6006F5336 /* yolo-small-opt.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "yolo-small-opt.pb"; path = "../../tf/tfmodels/yolo-small-opt.pb"; sourceTree = "<group>"; };
-		9AA463BC1E0206F6006F5336 /* yolo-tiny-opt.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "yolo-tiny-opt.pb"; path = "../../tf/tfmodels/yolo-tiny-opt.pb"; sourceTree = "<group>"; };
+		9A0529F91E10722A00C69E6A /* tfkNN.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = tfkNN.mm; sourceTree = "<group>"; };
+		9A0529FB1E10723700C69E6A /* tfkNN.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tfkNN.h; sourceTree = "<group>"; };
+		9A8B0BB21E1D4B1F00752AAE /* yolo-tiny-opt.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "yolo-tiny-opt.pb"; path = "../../tf/models/yolo-tiny-opt.pb"; sourceTree = "<group>"; };
 		9AC0214A1DE628EC00C29FF4 /* enVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = enVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AC0215F1DE6290C00C29FF4 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9AC021601DE6290C00C29FF4 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +74,23 @@
 		9AC0218C1DE6293900C29FF4 /* TypeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeExtensions.swift; sourceTree = "<group>"; };
 		9AC0218D1DE6293900C29FF4 /* enVision-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "enVision-Bridging-Header.h"; sourceTree = "<group>"; };
 		9AC021A31DE62AD600C29FF4 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		9AD668061E12CDF6002B4D62 /* kNN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = kNN.swift; sourceTree = "<group>"; };
+		9AD9A8FF1E1D19490011F845 /* yolo-map.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "yolo-map.pb"; path = "../../tf/models/yolo-map.pb"; sourceTree = "<group>"; };
+		9AEF8E711E1879E400210D31 /* Transparency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transparency.swift; sourceTree = "<group>"; };
+		9AEF8E751E187BCD00210D31 /* Imagenet-labels.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Imagenet-labels.txt"; path = "../../tf/models/Imagenet-labels.txt"; sourceTree = "<group>"; };
+		9AEF9CED1E18165F00E9A360 /* libprotobuf-lite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libprotobuf-lite.a"; path = "../../tf/lib/libprotobuf-lite.a"; sourceTree = "<group>"; };
+		9AEF9CEE1E18165F00E9A360 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotobuf.a; path = ../../tf/lib/libprotobuf.a; sourceTree = "<group>"; };
+		9AEF9CEF1E18165F00E9A360 /* libtensorflow-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libtensorflow-core.a"; path = "../../tf/lib/libtensorflow-core.a"; sourceTree = "<group>"; };
+		9AEF9CF31E18167400E9A360 /* DeepBelief.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeepBelief.framework; path = ../../tf/lib/DeepBelief.framework; sourceTree = "<group>"; };
+		9AEF9CF51E18169A00E9A360 /* jetpac.ntwk */ = {isa = PBXFileReference; lastKnownFileType = file; name = jetpac.ntwk; path = ../../tf/models/jetpac.ntwk; sourceTree = "<group>"; };
+		9AEF9CFB1E1821AF00E9A360 /* kNN.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = kNN.pb; path = ../../tf/models/kNN.pb; sourceTree = "<group>"; };
+		9AEF9CFD1E1821C100E9A360 /* voc-labels.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "voc-labels.txt"; path = "../../tf/models/voc-labels.txt"; sourceTree = "<group>"; };
+		9AEF9CFF1E1821C700E9A360 /* coco-labels.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "coco-labels.txt"; path = "../../tf/models/coco-labels.txt"; sourceTree = "<group>"; };
+		9AEF9D031E182CBC00E9A360 /* Jetpac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jetpac.swift; sourceTree = "<group>"; };
+		9AF0E06C1E1DB4D80029F13F /* yolo-small-opt.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "yolo-small-opt.pb"; path = "../../tf/models/yolo-small-opt.pb"; sourceTree = "<group>"; };
+		9AF0E06E1E1DB4E50029F13F /* tiny-coco-map.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "tiny-coco-map.pb"; path = "../../tf/models/tiny-coco-map.pb"; sourceTree = "<group>"; };
+		9AF0E0701E1DB4F60029F13F /* InceptionV3-opt.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "InceptionV3-opt.pb"; path = "../../tf/models/InceptionV3-opt.pb"; sourceTree = "<group>"; };
+		9AF0E0721E1DB4FC0029F13F /* facenet-inf-opt.pb */ = {isa = PBXFileReference; lastKnownFileType = file; name = "facenet-inf-opt.pb"; path = "../../tf/models/facenet-inf-opt.pb"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,10 +98,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AA463AE1E0206C8006F5336 /* libprotobuf-lite.a in Frameworks */,
-				9AA463AF1E0206C8006F5336 /* libprotobuf.a in Frameworks */,
+				9AEF9CF01E18165F00E9A360 /* libprotobuf-lite.a in Frameworks */,
+				9AEF9CF11E18165F00E9A360 /* libprotobuf.a in Frameworks */,
 				9AC021A41DE62AD600C29FF4 /* Accelerate.framework in Frameworks */,
-				9AA463B01E0206C8006F5336 /* libtensorflow-core.a in Frameworks */,
+				9AEF9CF41E18167400E9A360 /* DeepBelief.framework in Frameworks */,
+				9AEF9CF21E18165F00E9A360 /* libtensorflow-core.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,31 +112,32 @@
 		9A5D54B11DEED0F10089918F /* TensorFlow */ = {
 			isa = PBXGroup;
 			children = (
-				9A5D54B21DEED1080089918F /* Library */,
-				9AC0216B1DE6291C00C29FF4 /* tfWrap.h */,
 				9AC0216C1DE6291C00C29FF4 /* tfWrap.mm */,
+				9AC0216B1DE6291C00C29FF4 /* tfWrap.h */,
 				9AC0216D1DE6291C00C29FF4 /* tensorflow_utils.h */,
 				9AC0216E1DE6291C00C29FF4 /* tensorflow_utils.mm */,
+				9AEF9CF71E1816C900E9A360 /* kNN */,
+				9AEF9CED1E18165F00E9A360 /* libprotobuf-lite.a */,
+				9AEF9CEE1E18165F00E9A360 /* libprotobuf.a */,
+				9AEF9CEF1E18165F00E9A360 /* libtensorflow-core.a */,
 			);
 			name = TensorFlow;
-			sourceTree = "<group>";
-		};
-		9A5D54B21DEED1080089918F /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				9AA463AB1E0206C8006F5336 /* libprotobuf-lite.a */,
-				9AA463AC1E0206C8006F5336 /* libprotobuf.a */,
-				9AA463AD1E0206C8006F5336 /* libtensorflow-core.a */,
-			);
-			name = Library;
 			sourceTree = "<group>";
 		};
 		9A5D54B41DEED1260089918F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9AB437431E0192F600CCDF28 /* Inception */,
-				9AB437421E0192EF00CCDF28 /* YOLO */,
-				9AB437441E0192FC00CCDF28 /* FaceNet */,
+				9AEF8E751E187BCD00210D31 /* Imagenet-labels.txt */,
+				9AEF9CFF1E1821C700E9A360 /* coco-labels.txt */,
+				9AEF9CFD1E1821C100E9A360 /* voc-labels.txt */,
+				9A8B0BB21E1D4B1F00752AAE /* yolo-tiny-opt.pb */,
+				9AF0E06C1E1DB4D80029F13F /* yolo-small-opt.pb */,
+				9AF0E06E1E1DB4E50029F13F /* tiny-coco-map.pb */,
+				9AD9A8FF1E1D19490011F845 /* yolo-map.pb */,
+				9AF0E0721E1DB4FC0029F13F /* facenet-inf-opt.pb */,
+				9AF0E0701E1DB4F60029F13F /* InceptionV3-opt.pb */,
+				9AEF9CF51E18169A00E9A360 /* jetpac.ntwk */,
+				9AEF9CFB1E1821AF00E9A360 /* kNN.pb */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -135,35 +154,6 @@
 				9AC021751DE6292400C29FF4 /* svmutils.h */,
 			);
 			name = SVM;
-			sourceTree = "<group>";
-		};
-		9AB437421E0192EF00CCDF28 /* YOLO */ = {
-			isa = PBXGroup;
-			children = (
-				9AA463B51E0206F6006F5336 /* coco-labels.txt */,
-				9AA463B61E0206F6006F5336 /* tiny-coco-map.pb */,
-				9AA463B91E0206F6006F5336 /* voc-labels.txt */,
-				9AA463BA1E0206F6006F5336 /* yolo-map.pb */,
-				9AA463BB1E0206F6006F5336 /* yolo-small-opt.pb */,
-				9AA463BC1E0206F6006F5336 /* yolo-tiny-opt.pb */,
-			);
-			name = YOLO;
-			sourceTree = "<group>";
-		};
-		9AB437431E0192F600CCDF28 /* Inception */ = {
-			isa = PBXGroup;
-			children = (
-				9AA463B11E0206EC006F5336 /* Imagenet-labels.txt */,
-				9AA463B21E0206EC006F5336 /* InceptionV3-opt.pb */,
-			);
-			name = Inception;
-			sourceTree = "<group>";
-		};
-		9AB437441E0192FC00CCDF28 /* FaceNet */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = FaceNet;
 			sourceTree = "<group>";
 		};
 		9AC021411DE628EC00C29FF4 = {
@@ -188,13 +178,16 @@
 			children = (
 				9AC0215F1DE6290C00C29FF4 /* AppDelegate.swift */,
 				9AC021601DE6290C00C29FF4 /* ViewController.swift */,
-				9AC021631DE6290C00C29FF4 /* Inception.swift */,
 				9AC021621DE6290C00C29FF4 /* YOLO.swift */,
 				9AC021611DE6290C00C29FF4 /* FaceNet.swift */,
+				9AC021631DE6290C00C29FF4 /* Inception.swift */,
+				9AEF9D031E182CBC00E9A360 /* Jetpac.swift */,
+				9AEF8E711E1879E400210D31 /* Transparency.swift */,
 				9AC021641DE6290C00C29FF4 /* Camera.swift */,
 				9A5D54B11DEED0F10089918F /* TensorFlow */,
-				9A5D54B41DEED1260089918F /* Models */,
+				9AEF9CEA1E18158F00E9A360 /* Jetpac */,
 				9A5D54B51DEED1350089918F /* SVM */,
+				9A5D54B41DEED1260089918F /* Models */,
 				9AC021881DE6293900C29FF4 /* LaunchScreen.storyboard */,
 				9AC021891DE6293900C29FF4 /* Main.storyboard */,
 				9AC0218A1DE6293900C29FF4 /* Assets.xcassets */,
@@ -211,6 +204,24 @@
 				9AC021A31DE62AD600C29FF4 /* Accelerate.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9AEF9CEA1E18158F00E9A360 /* Jetpac */ = {
+			isa = PBXGroup;
+			children = (
+				9AEF9CF31E18167400E9A360 /* DeepBelief.framework */,
+			);
+			name = Jetpac;
+			sourceTree = "<group>";
+		};
+		9AEF9CF71E1816C900E9A360 /* kNN */ = {
+			isa = PBXGroup;
+			children = (
+				9AD668061E12CDF6002B4D62 /* kNN.swift */,
+				9A0529F91E10722A00C69E6A /* tfkNN.mm */,
+				9A0529FB1E10723700C69E6A /* tfkNN.h */,
+			);
+			name = kNN;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,17 +285,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AA463C21E0206F6006F5336 /* voc-labels.txt in Resources */,
-				9AA463C31E0206F6006F5336 /* yolo-map.pb in Resources */,
+				9AF0E0731E1DB4FC0029F13F /* facenet-inf-opt.pb in Resources */,
+				9AF0E06F1E1DB4E50029F13F /* tiny-coco-map.pb in Resources */,
+				9AEF9CFE1E1821C100E9A360 /* voc-labels.txt in Resources */,
+				9AD9A9001E1D19490011F845 /* yolo-map.pb in Resources */,
+				9AEF9D001E1821C700E9A360 /* coco-labels.txt in Resources */,
+				9AEF9CF61E18169A00E9A360 /* jetpac.ntwk in Resources */,
+				9A8B0BB31E1D4B1F00752AAE /* yolo-tiny-opt.pb in Resources */,
 				9AC021901DE6293900C29FF4 /* Main.storyboard in Resources */,
-				9AA463BF1E0206F6006F5336 /* tiny-coco-map.pb in Resources */,
-				9AA463BE1E0206F6006F5336 /* coco-labels.txt in Resources */,
 				9AC0218F1DE6293900C29FF4 /* LaunchScreen.storyboard in Resources */,
-				9AA463B31E0206EC006F5336 /* Imagenet-labels.txt in Resources */,
-				9AA463B41E0206EC006F5336 /* InceptionV3-opt.pb in Resources */,
+				9AEF9CFC1E1821AF00E9A360 /* kNN.pb in Resources */,
 				9AC021911DE6293900C29FF4 /* Assets.xcassets in Resources */,
-				9AA463C41E0206F6006F5336 /* yolo-small-opt.pb in Resources */,
-				9AA463C51E0206F6006F5336 /* yolo-tiny-opt.pb in Resources */,
+				9AEF8E761E187BCD00210D31 /* Imagenet-labels.txt in Resources */,
+				9AF0E0711E1DB4F60029F13F /* InceptionV3-opt.pb in Resources */,
+				9AF0E06D1E1DB4D80029F13F /* yolo-small-opt.pb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,16 +310,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AC021781DE6292400C29FF4 /* svm.cpp in Sources */,
+				9AEF8E721E1879E400210D31 /* Transparency.swift in Sources */,
 				9AC021681DE6290C00C29FF4 /* YOLO.swift in Sources */,
 				9AC021661DE6290C00C29FF4 /* ViewController.swift in Sources */,
 				9AC0216A1DE6290C00C29FF4 /* Camera.swift in Sources */,
 				9AC0216F1DE6291C00C29FF4 /* tfWrap.mm in Sources */,
+				9AD668071E12CDF6002B4D62 /* kNN.swift in Sources */,
 				9AC021691DE6290C00C29FF4 /* Inception.swift in Sources */,
 				9AC021931DE6293900C29FF4 /* TypeExtensions.swift in Sources */,
+				9AEF9D041E182CBC00E9A360 /* Jetpac.swift in Sources */,
 				9AC021791DE6292400C29FF4 /* SVM.swift in Sources */,
 				9AC021671DE6290C00C29FF4 /* FaceNet.swift in Sources */,
 				9AC0217B1DE6292400C29FF4 /* svmWrap.cpp in Sources */,
 				9AC021701DE6291C00C29FF4 /* tensorflow_utils.mm in Sources */,
+				9A0529FA1E10722A00C69E6A /* tfkNN.mm in Sources */,
 				9AC021651DE6290C00C29FF4 /* AppDelegate.swift in Sources */,
 				9AC0217A1DE6292400C29FF4 /* svmutils.cpp in Sources */,
 			);
@@ -418,15 +436,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/enVision",
+					"$(PROJECT_DIR)/../tf/lib",
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../tf";
 				INFOPLIST_FILE = enVision/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../tf/tflib";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../tf/lib";
 				OTHER_LDFLAGS = (
 					"-force_load",
-					"$(PROJECT_DIR)/../tf/tflib/libtensorflow-core.a",
+					"$(PROJECT_DIR)/../tf/lib/libtensorflow-core.a",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.idlabs.enVision.enVision;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -447,15 +466,16 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/enVision",
+					"$(PROJECT_DIR)/../tf/lib",
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../tf";
 				INFOPLIST_FILE = enVision/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../tf/tflib";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../tf/lib";
 				OTHER_LDFLAGS = (
 					"-force_load",
-					"$(PROJECT_DIR)/../tf/tflib/libtensorflow-core.a",
+					"$(PROJECT_DIR)/../tf/lib/libtensorflow-core.a",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.idlabs.enVision.enVision;
 				PRODUCT_NAME = "$(TARGET_NAME)";

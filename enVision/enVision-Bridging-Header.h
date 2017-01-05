@@ -3,4 +3,6 @@
 //
 
 #import "tfWrap.h"
+#import "tfkNN.h"
+#import "DeepBelief/DeepBelief.h"
 #import "svmWrap.h"

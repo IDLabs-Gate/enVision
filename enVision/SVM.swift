@@ -26,7 +26,12 @@ import Foundation
 
 extension ViewController {
     
-    func createSVMPredictor(features: [Float], otherFeatures: [[Float]])->UnsafeMutableRawPointer?{
+    func SVMPredict(_ features: [Double], predictor: UnsafeMutableRawPointer?)->Double{
+        
+        return Double(SVM_predict(predictor, UnsafeMutablePointer<Float>(mutating: features.map { Float($0) }), Int32(features.count)))
+    }
+    
+    func createSVMPredictor(features: [Double], otherFeatures: [[Double]])->UnsafeMutableRawPointer?{
         guard otherFeatures.count>0 else { return nil }
         
         let now = Date(timeIntervalSinceNow: 0)
@@ -36,8 +41,8 @@ extension ViewController {
         print("features dim", features.count)
         print("other dim", otherFeatures.first!.count)
         for other in otherFeatures {
-            SVM_train(trainer, 1.0, UnsafeMutablePointer<Float>(mutating: features), Int32(features.count))
-            SVM_train(trainer, 0.0, UnsafeMutablePointer<Float>(mutating: other), Int32(other.count))
+            SVM_train(trainer, 1.0, UnsafeMutablePointer<Float>(mutating: features.map { Float($0) }), Int32(features.count))
+            SVM_train(trainer, 0.0, UnsafeMutablePointer<Float>(mutating: other.map { Float($0) }), Int32(other.count))
             i+=1
         }
         
@@ -49,7 +54,9 @@ extension ViewController {
         return predictor
     }
     
-    //let prob = SVM_predict(predictor, UnsafeMutablePointer<Float>(mutating: features), Int32(features.count))
-    
-
+    func destroySVMPredictor(_ predictor: UnsafeMutableRawPointer?){
+        if let p = predictor {
+            SVM_destroy_predictor(p)
+        }
+    }
 }
