@@ -42,7 +42,7 @@ https://arxiv.org/abs/1503.03832
 
 ![sample3](https://github.com/IDLabs-Gate/enVision/blob/master/sample3.jpg)
 
-Inception-Resnet-v1 model (FaceScrub and CASIA-Webface)
+Inception-Resnet-v1 (FaceScrub and CASIA-Webface)
 
 .
 
