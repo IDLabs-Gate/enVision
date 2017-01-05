@@ -49,7 +49,7 @@
 
 - (void) loadModel:(NSString*)graphFileName labels:(NSString*)labelsFileName memMapped:(bool)map optEnv:(bool)opt {
     
-    if (tfQueue==nil) { tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIAL);}
+    [self createQueue];
     
     dispatch_sync(tfQueue,^{
         NSString* model_file_name;
@@ -119,7 +119,7 @@
 }
 
 -(void) clean {
-    if (tfQueue==nil) { tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIAL);}
+    [self createQueue];
     
     dispatch_sync(tfQueue, ^{
         CleanSession(&tf_session);
@@ -129,7 +129,7 @@
 
 -(void)setInputLayer:(NSString *)inLayer outputLayer:(NSString *)outLayer {
     
-    if (tfQueue==nil) { tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIAL);}
+    [self createQueue];
     
     dispatch_sync(tfQueue, ^{
         input_layer_name = [inLayer UTF8String];
@@ -139,7 +139,7 @@
 
 -(void)setInputMean:(float)mean std:(float)std {
     
-    if (tfQueue==nil) { tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIAL);}
+    [self createQueue];
     
     dispatch_sync(tfQueue, ^{
         input_mean = mean; input_std = std;
@@ -163,7 +163,7 @@
 - (NSArray*)runOnFrame:(CVPixelBufferRef)pixelBuffer {
     assert(pixelBuffer != NULL);
     
-    if (tfQueue==nil) { tfQueue = dispatch_queue_create("tfQueue", DISPATCH_QUEUE_SERIAL);}
+    [self createQueue];
     
     __block NSArray* output;
     
@@ -253,6 +253,13 @@
     
     return output;
 }
+
+-(void) createQueue {
+    if (tfQueue==nil) {
+        tfQueue = dispatch_queue_create("tfQueue", dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT, 0));
+    }
+}
+
 
 @end
 

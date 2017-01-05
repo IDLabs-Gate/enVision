@@ -37,7 +37,7 @@
 
 -(void) loadModel:(NSString*)modelName{
     
-    if (kNNQueue==nil) { kNNQueue = dispatch_queue_create("kNNQueue", DISPATCH_QUEUE_SERIAL); }
+    [self createQueue];
     dispatch_sync(kNNQueue,^{
         NSString* model_file_name;
         NSString* model_file_type;
@@ -75,7 +75,7 @@
     if (k>samples.count){ k = (int)samples.count; }
     //LOG(INFO)<<"K = "<<k;
     
-    if (kNNQueue==nil) { kNNQueue = dispatch_queue_create("kNNQueue", DISPATCH_QUEUE_SERIAL); }
+    [self createQueue];
     dispatch_sync(kNNQueue, ^{
         
         //Xte
@@ -146,10 +146,16 @@
 
 
 -(void) clean {
-    if (kNNQueue==nil) { kNNQueue = dispatch_queue_create("kNNQueue", DISPATCH_QUEUE_SERIAL); }
+    [self createQueue];
     dispatch_sync(kNNQueue, ^{
         CleanSession(&tf_session);
     });
+}
+
+-(void) createQueue {
+    if (kNNQueue==nil) {
+        kNNQueue = dispatch_queue_create("kNNQueue", dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT, 0) );
+    }
 }
 
 
