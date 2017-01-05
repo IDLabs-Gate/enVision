@@ -36,6 +36,7 @@ YOLO 1.1 tiny (COCO): Fast on extended classes
 YOLO 2 (COCO): Best accuracy on extended classes
 
 YOLO detector + Jetpac feature extractor from snaps + kNN classifier with Euclidean distance
+
 .
 
 #### FaceNet:
@@ -45,7 +46,7 @@ https://arxiv.org/abs/1503.03832
 
 Inception-Resnet-v1 (FaceScrub and CASIA-Webface)
 
-Native iOS Face detector + FaceNet feature extractor from snaps + kNN classifier with Euclidean distance
+Native iOS face detector + FaceNet feature extractor from snaps + kNN classifier with Euclidean distance
 .
 
 #### Inception: 
@@ -64,6 +65,7 @@ Jetpac network (ImageNet)
 
 DeepBeliefSDK framework
 
+.
 
 ## License
 ####MIT License
