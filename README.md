@@ -55,7 +55,7 @@ https://arxiv.org/abs/1512.00567
 
 Inception v3 (ImageNet)
 
-Can run retrained models too
+Can run retrained models instead
 
 .
 
