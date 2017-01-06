@@ -39,8 +39,6 @@ class Jetpac {
     
     func run(image: CIImage, topLayer: Bool = true)-> [(label: String, prob: Double)]{
         
-        if network == nil { load() }
-        
         var probs = [Double]()
         var labels = [String]()
         

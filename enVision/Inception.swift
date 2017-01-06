@@ -36,9 +36,15 @@ class Inception {
         tfInception?.setInputLayer("Mul", outputLayer: "softmax")
     }
     
+    func loadRetraiend(){
+        clean()
+        tfInception = tfWrap()
+        tfInception?.loadModel("retrained-opt.pb", labels: "retrained-labels.txt", memMapped: true, optEnv: true)
+        tfInception?.setInputLayer("Mul", outputLayer: "final_result")
+    }
+    
     func run(image: CIImage) -> [(label: String, prob: Double)] {
         
-        if tfInception == nil { load() }
         guard let tfInception = tfInception else { return [] }
         
         let inputEdge = 299+21
@@ -70,5 +76,6 @@ class Inception {
     
     func clean() {
         tfInception?.clean()
+        tfInception = nil
     }
 }

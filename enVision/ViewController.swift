@@ -325,9 +325,26 @@ let incep = Inception()
 
 extension ViewController {
     
-    func loadInceptionModel(){
+    func loadInceptionModel(retrained:Bool=false){
         
-        incep.load()
+        //check for retrained model in bundle
+        if retrained{
+            if let path1 = Bundle.main.path(forResource: "retrained-opt", ofType: "pb") {
+                if let path2 = Bundle.main.path(forResource: "retrained-labels", ofType: "txt"){
+                    if FileManager.default.fileExists(atPath: path1) && FileManager.default.fileExists(atPath: path2){
+                        
+                        incep.loadRetraiend()
+                        
+                    }
+                }
+            }
+        
+        } else {//load default
+            
+            incep.load()
+            
+        }
+
         currentModel = .inception
         
         showPredictionList()
@@ -455,6 +472,12 @@ extension ViewController {
         
         alert1.addAction(createMenuAction(title: "Inception v3 (ImageNet)", shortTitle: true, loadTask: { () in
             self.loadInceptionModel()
+        }, frameTask: { (frame) in
+            self.recognizeInceptionObjects(frameImage: frame)
+        }))
+        
+        alert1.addAction(createMenuAction(title: "Re-Inception (Custom Data)", shortTitle: true, loadTask: { () in
+            self.loadInceptionModel(retrained: true)
         }, frameTask: { (frame) in
             self.recognizeInceptionObjects(frameImage: frame)
         }))

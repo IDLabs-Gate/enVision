@@ -37,7 +37,6 @@ class FaceNet {
     
     func run(image: CIImage)-> [Double]{
         
-        if tfFacenet == nil { load() }
         guard let tfFacenet = tfFacenet else { return [] }
         
         let inputEdge = 160
@@ -66,6 +65,7 @@ class FaceNet {
     
     func clean(){
         tfFacenet?.clean()
+        tfFacenet = nil
     }
     
 }

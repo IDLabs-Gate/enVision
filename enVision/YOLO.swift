@@ -72,7 +72,6 @@ class YOLO {
     
     func run(image: CIImage)-> YoloOutput {
         
-        if tfYolo == nil { load() }
         guard let tfYolo = tfYolo else { return [] }
         
         //pre-processing
@@ -394,6 +393,7 @@ class YOLO {
     
     func clean() {
         tfYolo?.clean()
+        tfYolo = nil
     }
     
 }
