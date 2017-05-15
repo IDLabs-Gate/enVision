@@ -106,7 +106,7 @@ class YOLO {
             guard max_index<labels.count else { return nil }
             
             let label = labels[max_index]
-            
+            guard label != "non_object" else{return nil}
             //convert Yolo boxes to screen
             let frameWidth = image.extent.width
             let frameHeight = image.extent.height
