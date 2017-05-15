@@ -1,0 +1,9 @@
+eigen/
+google/
+lib/
+nbproject/
+tensorflow/
+third_party/
+*.zip
+*.pb
+*.ntwk

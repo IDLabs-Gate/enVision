@@ -1,0 +1,80 @@
+non_object
+bicycle
+car
+motorbike
+object
+bus
+train
+car
+boat
+traffic light
+object
+stop sign
+object
+bench
+bird
+cat
+dog
+object
+object
+object
+object
+object
+object
+object
+backpack
+umbrella
+handbag
+object
+suitcase
+object
+object
+object
+sports ball
+object
+object
+object
+object
+object
+tennis racket
+bottle
+wine glass
+cup
+fork
+knife
+spoon
+bowl
+banana
+apple
+sandwich
+orange
+broccoli
+carrot
+hot dog
+pizza
+donut
+cake
+chair
+sofa
+plant
+bed
+non_object
+object
+tvmonitor
+laptop
+mouse
+remote
+keyboard
+cell phone
+object
+object
+object
+sink
+refrigerator
+book
+clock
+vase
+glasses
+object
+object
+toothbrush
