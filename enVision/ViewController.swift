@@ -353,7 +353,7 @@ extension ViewController {
     func recognizeInceptionObjects(frameImage:CIImage){
         
         let output = incep.run(image: frameImage)
-        
+        /*
         //UI: prediction list
         var predictions = [String : Double]()
         
@@ -361,7 +361,11 @@ extension ViewController {
             if p>0.05 {
                 predictions[l] = p
             }
-        }
+        }*/
+  
+
+        let maxValue = output.max { $0.prob < $1.prob };
+        let predictions = [maxValue!.label: maxValue!.prob];
         
         async_main {
             self.setPredictionValues(predictions)
