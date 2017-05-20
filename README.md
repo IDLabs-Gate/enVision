@@ -1,11 +1,11 @@
 # enVision
 Deep Learning Models for Vision Tasks on iOS
 
-![sample] (https://github.com/IDLabs-Gate/enVision/blob/master/sample2.jpg)
+![sample](https://github.com/IDLabs-Gate/enVision/blob/master/sample2.jpg)
 
 ## Usage
 Download [dependencies] folder tf
-[dependencies]:https://drive.google.com/open?id=0B7JMhWoJ8WpUNW9wYS1tRVI0dlk
+![dependencies](https://drive.google.com/open?id=0B7JMhWoJ8WpUNW9wYS1tRVI0dlk)
 Extract all archives in tf/models and tf/lib
 
 Put tf folder in same directory level as enVision project folder
