@@ -5,7 +5,9 @@ Deep Learning Models for Vision Tasks on iOS
 
 ## Usage
 Download [dependencies] folder tf
-![dependencies](https://drive.google.com/open?id=0B7JMhWoJ8WpUNW9wYS1tRVI0dlk)
+
+[dependencies]:https://drive.google.com/open?id=0B7JMhWoJ8WpUNW9wYS1tRVI0dlk
+
 Extract all archives in tf/models and tf/lib
 
 Put tf folder in same directory level as enVision project folder
