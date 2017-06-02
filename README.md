@@ -71,7 +71,7 @@ DeepBeliefSDK framework
 .
 
 ## License
-####MIT License
+#### MIT License
 
 Owner: ID Labs L.L.C.
 
